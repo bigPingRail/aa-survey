@@ -1,0 +1,50 @@
+questions:
+  - prompt: What is your first name?
+    type: input
+    default: Vasily
+    target: ans_user_first_name
+
+  - prompt: What is your last name?
+    type: input
+    validate: required
+    target: ans_user_last_name
+
+  - prompt: What is your password?
+    type: password
+    validate: password
+    target: ans_user_password
+
+  - prompt: Select ONE option from list
+    type: select
+    options:
+      - One
+      - Two
+      - Three
+    target: user_select
+
+  - prompt: Select MULTIPLE options from list
+    type: multiselect
+    options:
+      - One
+      - Two
+      - Three
+      - Four
+    validate: many
+    target: user_multiselect
+
+  - prompt: Select file
+    type: file
+    target: user_file
+
+  - prompt: Select public key
+    type: public_key
+    target: ssh_pub_key
+    
+  - prompt: Select private key
+    type: private_key
+    target: ssh_priv_key
+
+  - prompt: Like the survey?
+    type: confirm
+    default: true
+    target: user_like
