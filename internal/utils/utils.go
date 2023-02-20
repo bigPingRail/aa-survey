@@ -27,7 +27,7 @@ func Contains(s []string, x string) bool {
 	return false
 }
 
-func ConvertBootToStr(s string) bool {
+func ConvertBoolToStr(s string) bool {
 	if s != "" {
 		parsed, err := strconv.ParseBool(s)
 		if err != nil {

@@ -69,7 +69,7 @@ func (q *Questionnaire) AskQuestions() map[string]interface{} {
 			var ans bool
 			prompt := &survey.Confirm{
 				Message: question.Prompt,
-				Default: utils.ConvertBootToStr(question.Default),
+				Default: utils.ConvertBoolToStr(question.Default),
 			}
 			err = survey.AskOne(prompt, &ans)
 			answers[question.Target] = strconv.FormatBool(ans)
