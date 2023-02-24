@@ -1,7 +1,7 @@
 package validators
 
 import (
-	"aa-survey-v2/internal/utils"
+	"aa-survey/internal/utils"
 	"fmt"
 	"os"
 
@@ -25,7 +25,7 @@ func ValidateMany(ans interface{}) error {
 	return nil
 }
 
-// Validate provided path point to file
+// Validate path is file
 func ValidateIsFile(ans interface{}) error {
 	path := utils.ToAbsPath(ans)
 	fi, err := os.Stat(path.(string))
@@ -34,6 +34,19 @@ func ValidateIsFile(ans interface{}) error {
 	}
 	if fi.IsDir() {
 		return fmt.Errorf("%s is directory", path.(string))
+	}
+	return nil
+}
+
+// Validate path is dir
+func ValidateIsDir(ans interface{}) error {
+	path := utils.ToAbsPath(ans)
+	d, err := os.Stat(path.(string))
+	if err != nil {
+		return fmt.Errorf("error: %s", err)
+	}
+	if !d.IsDir() {
+		return fmt.Errorf("%s is file", path.(string))
 	}
 	return nil
 }

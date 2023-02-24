@@ -1,7 +1,7 @@
 package main
 
 import (
-	"aa-survey-v2/internal/structs"
+	"aa-survey/internal/resources"
 	"flag"
 	"fmt"
 	"log"
@@ -23,14 +23,11 @@ func main() {
 	}
 
 	// Unmarshal the YAML data into a Questionnaire struct
-	var questionnaire structs.Questionnaire
+	var questionnaire resources.Questionnaire
 	err = yaml.Unmarshal(data, &questionnaire)
 	if err != nil {
 		log.Fatalf("error unmarshaling questions: %v", err)
 	}
-
-	// Set up answer validation for certain questions
-	questionnaire.SetupValidators()
 
 	// Ask the questions and print result to stdout
 	answers := questionnaire.AskQuestions()

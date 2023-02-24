@@ -1,9 +1,9 @@
-module aa-survey-v2
+module aa-survey
 
 go 1.20
 
 require (
-	github.com/AlecAivazis/survey/v2 v2.3.5
+	github.com/AlecAivazis/survey/v2 v2.3.6
 	golang.org/x/crypto v0.0.0-20220826181053-bd7e27e6170d
 	gopkg.in/yaml.v2 v2.4.0
 )

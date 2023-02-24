@@ -36,6 +36,10 @@ questions:
     type: file
     target: user_file
 
+  - prompt: Select directory
+    type: dir
+    target: user_dir
+
   - prompt: Select public key
     type: public_key
     target: ssh_pub_key

@@ -3,10 +3,7 @@ package utils
 import (
 	"log"
 	"path/filepath"
-	"reflect"
 	"strconv"
-
-	"github.com/AlecAivazis/survey/v2"
 )
 
 func ToAbsPath(ans interface{}) interface{} {
@@ -41,11 +38,4 @@ Available values is:
 	}
 	return true
 
-}
-
-func AskQuestion(prompt survey.Prompt, answer interface{}, validatorFunc func(interface{}) error) error {
-	if reflect.ValueOf(validatorFunc).IsNil() {
-		return survey.AskOne(prompt, answer)
-	}
-	return survey.AskOne(prompt, answer, survey.WithValidator(validatorFunc))
 }
