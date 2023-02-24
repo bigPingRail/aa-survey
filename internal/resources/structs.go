@@ -24,7 +24,7 @@ type Questionnaire struct {
 	Questions []Question `yaml:"questions"`
 }
 
-func (q *Questionnaire) CheckValidators() {
+func (q *Questionnaire) checkValidators() {
 	validatorsMap := map[string]struct {
 		ValidatorFunc func(interface{}) error
 		AllowedTypes  []string
@@ -58,7 +58,7 @@ func (q *Questionnaire) CheckValidators() {
 func (q *Questionnaire) AskQuestions() map[string]interface{} {
 	answers := make(map[string]interface{})
 	// Check the initial validator setup.
-	q.CheckValidators()
+	q.checkValidators()
 
 	for _, question := range q.Questions {
 		answer, err := askQuestion(question)

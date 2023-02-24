@@ -12,7 +12,7 @@ import (
 	"github.com/AlecAivazis/survey/v2/terminal"
 )
 
-func PromptWithValidator(prompt survey.Prompt, answer interface{}, validatorFunc func(interface{}) error) error {
+func promptWithValidator(prompt survey.Prompt, answer interface{}, validatorFunc func(interface{}) error) error {
 	if validatorFunc == nil {
 		return survey.AskOne(prompt, answer)
 	}
@@ -35,7 +35,7 @@ func askInput(q Question) (string, error) {
 		Default: q.Default,
 	}
 	var answer string
-	err := PromptWithValidator(prompt, &answer, q.VFunc)
+	err := promptWithValidator(prompt, &answer, q.VFunc)
 	return answer, err
 }
 
@@ -44,7 +44,7 @@ func askPassword(q Question) (string, error) {
 		Message: q.Prompt,
 	}
 	var answer string
-	err := PromptWithValidator(prompt, &answer, q.VFunc)
+	err := promptWithValidator(prompt, &answer, q.VFunc)
 	return answer, err
 }
 
@@ -81,7 +81,7 @@ func askSelect(q Question) (string, error) {
 		Options: q.Options,
 	}
 	var answer string
-	err := PromptWithValidator(prompt, &answer, q.VFunc)
+	err := promptWithValidator(prompt, &answer, q.VFunc)
 	return answer, err
 }
 
@@ -91,7 +91,7 @@ func askMultiSelect(q Question) ([]string, error) {
 		Options: q.Options,
 	}
 	var answer []string
-	err := PromptWithValidator(prompt, &answer, q.VFunc)
+	err := promptWithValidator(prompt, &answer, q.VFunc)
 	return answer, err
 }
 
