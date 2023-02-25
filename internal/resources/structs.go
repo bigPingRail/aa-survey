@@ -4,6 +4,7 @@ import (
 	"aa-survey/internal/utils"
 	"aa-survey/internal/validators"
 	"log"
+	"strings"
 
 	"github.com/AlecAivazis/survey/v2"
 )
@@ -22,6 +23,25 @@ type Question struct {
 
 type Questionnaire struct {
 	Questions []Question `yaml:"questions"`
+}
+
+func (q *Questionnaire) checkQuestionTypes() {
+	allowedTypes := []string{
+		"confirm",
+		"input",
+		"password",
+		"select",
+		"multiselect",
+		"public_key",
+		"private_key",
+		"file",
+		"dir",
+	}
+	for _, v := range q.Questions {
+		if !utils.Contains(allowedTypes, v.Type) {
+			log.Fatalf("unsupported question type \"%s\"\nallowed types is: %s", v.Type, strings.Join(allowedTypes, ", "))
+		}
+	}
 }
 
 func (q *Questionnaire) checkValidators() {
@@ -57,6 +77,8 @@ func (q *Questionnaire) checkValidators() {
 
 func (q *Questionnaire) AskQuestions() map[string]interface{} {
 	answers := make(map[string]interface{})
+	// Check the allowed question types
+	q.checkQuestionTypes()
 	// Check the initial validator setup.
 	q.checkValidators()
 
