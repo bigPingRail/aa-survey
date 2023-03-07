@@ -22,16 +22,6 @@ questions:
       - Three
     target: user_select
 
-  - prompt: Select MULTIPLE options from list
-    type: multiselect
-    options:
-      - One
-      - Two
-      - Three
-      - Four
-    validate: many
-    target: user_multiselect
-
   - prompt: Select file
     type: file
     target: user_file

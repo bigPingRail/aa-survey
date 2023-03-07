@@ -7,6 +7,8 @@ import (
 	"log"
 	"path/filepath"
 	"strconv"
+	"os"
+	"regexp"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/AlecAivazis/survey/v2/terminal"
@@ -17,6 +19,23 @@ func promptWithValidator(prompt survey.Prompt, answer interface{}, validatorFunc
 		return survey.AskOne(prompt, answer)
 	}
 	return survey.AskOne(prompt, answer, survey.WithValidator(validatorFunc))
+}
+
+func handleQuestionError(err error) {
+	if err == terminal.InterruptErr {
+		log.Fatal("Survey Interrupted...")
+	}
+	log.Fatalf("error asking question: %v\n", err)
+}
+
+func globHomeDir(s string) string {
+	re := regexp.MustCompile(`^~`)
+	homeDir, err := os.UserHomeDir()
+	if err != nil {
+		return s
+	}
+
+	return re.ReplaceAllString(s, homeDir)
 }
 
 func askConfirm(q Question) (string, error) {
@@ -65,7 +84,7 @@ func askFile(q Question) (string, error) {
 	prompt := &survey.Input{
 		Message: q.Prompt,
 		Suggest: func(toComplete string) []string {
-			files, _ := filepath.Glob(toComplete + "*")
+			files, _ := filepath.Glob(globHomeDir(toComplete) + "*")
 			return files
 		},
 	}
@@ -93,13 +112,6 @@ func askMultiSelect(q Question) ([]string, error) {
 	var answer []string
 	err := promptWithValidator(prompt, &answer, q.VFunc)
 	return answer, err
-}
-
-func handleQuestionError(err error) {
-	if err == terminal.InterruptErr {
-		log.Fatal("Survey Interrupted...")
-	}
-	log.Fatalf("error asking question: %v\n", err)
 }
 
 func askQuestion(question Question) (interface{}, error) {
