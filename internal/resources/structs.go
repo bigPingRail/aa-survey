@@ -15,6 +15,7 @@ type Question struct {
 	Default string   `yaml:"default"`
 	Target  string   `yaml:"target"`
 	Answer  string   `yaml:"answer"`
+	Help    string   `yaml:"help"`
 	Options []string `yaml:"options,omitempty"`
 
 	Validate string                      `yaml:"validate"`

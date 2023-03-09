@@ -19,6 +19,8 @@ Initial commit
 
 `validate` - contains the field validator which is prevents wrong user input (CURRENTLY IN DEVELOP)
 
+`help` - help message for prompt
+
 Example surveyfile
 
 ```yaml

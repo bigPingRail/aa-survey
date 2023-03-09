@@ -5,10 +5,10 @@ import (
 	"aa-survey/internal/validators"
 	"fmt"
 	"log"
-	"path/filepath"
-	"strconv"
 	"os"
+	"path/filepath"
 	"regexp"
+	"strconv"
 
 	"github.com/AlecAivazis/survey/v2"
 	"github.com/AlecAivazis/survey/v2/terminal"
@@ -34,7 +34,6 @@ func globHomeDir(s string) string {
 	if err != nil {
 		return s
 	}
-
 	return re.ReplaceAllString(s, homeDir)
 }
 
@@ -42,6 +41,7 @@ func askConfirm(q Question) (string, error) {
 	prompt := &survey.Confirm{
 		Message: q.Prompt,
 		Default: utils.ConvertBoolToStr(q.Default),
+		Help:    q.Help,
 	}
 	var answer bool
 	err := survey.AskOne(prompt, &answer)
@@ -52,6 +52,7 @@ func askInput(q Question) (string, error) {
 	prompt := &survey.Input{
 		Message: q.Prompt,
 		Default: q.Default,
+		Help:    q.Help,
 	}
 	var answer string
 	err := promptWithValidator(prompt, &answer, q.VFunc)
@@ -61,6 +62,7 @@ func askInput(q Question) (string, error) {
 func askPassword(q Question) (string, error) {
 	prompt := &survey.Password{
 		Message: q.Prompt,
+		Help:    q.Help,
 	}
 	var answer string
 	err := promptWithValidator(prompt, &answer, q.VFunc)
@@ -87,6 +89,7 @@ func askFile(q Question) (string, error) {
 			files, _ := filepath.Glob(globHomeDir(toComplete) + "*")
 			return files
 		},
+		Help: q.Help,
 	}
 	var answer string
 	err := survey.AskOne(prompt, &answer, survey.WithValidator(cv))
@@ -98,6 +101,7 @@ func askSelect(q Question) (string, error) {
 	prompt := &survey.Select{
 		Message: q.Prompt,
 		Options: q.Options,
+		Help:    q.Help,
 	}
 	var answer string
 	err := promptWithValidator(prompt, &answer, q.VFunc)
@@ -108,6 +112,7 @@ func askMultiSelect(q Question) ([]string, error) {
 	prompt := &survey.MultiSelect{
 		Message: q.Prompt,
 		Options: q.Options,
+		Help:    q.Help,
 	}
 	var answer []string
 	err := promptWithValidator(prompt, &answer, q.VFunc)
